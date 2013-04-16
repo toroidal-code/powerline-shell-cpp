@@ -4,7 +4,7 @@ project (powerline-zsh)
 find_package( Boost )
           if(Boost_FOUND)
              include_directories(${Boost_INCLUDE_DIRS})
-             add_executable(powerline-zsh powerline-zsh.cpp parser.cpp)
+             add_executable(powerline-zsh powerline-zsh.cpp powerline-zsh.cpp parser.cpp)
           endif()
 
 
