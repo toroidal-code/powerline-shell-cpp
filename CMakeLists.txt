@@ -4,9 +4,11 @@ project (powerline-zsh)
 find_package( Boost )
           if(Boost_FOUND)
              include_directories(${Boost_INCLUDE_DIRS})
-             add_executable(powerline-zsh powerline-zsh.cpp)
+             add_executable(powerline-zsh powerline-zsh.cpp powerline.cpp segment.cpp)
           endif()
 
+
+link_directories(${CMAKE_CURRENT_SOURCE_DIR}/ctoml/build)
 target_link_libraries(powerline-zsh
   ${Boost_FILESYSTEM_LIBRARY}
 )
