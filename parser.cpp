@@ -1,6 +1,6 @@
 #include <cstdio>
 #include <string>
-#include "ctoml/src/include/ctoml.h"
+#include "ctoml/src/include/toml.h"
 
 
 void setupToml(CToml* toml){
