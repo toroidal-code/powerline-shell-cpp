@@ -42,10 +42,10 @@ void addCwdSegment(Powerline* powerline,std::string cwd,bool currentOnly = false
 	//cwd = getenv("PWD");
 	//std::cout << getenv("PWD") << std::endl;
 
-	unsigned found = cwd.find(home);
+	std::size_t found = cwd.find(home);
 
 	if (found != std::string::npos && found < cwd.size()){
-		int end = found + home.length();
+		size_t end = found + home.length();
 		cwd.replace(found,end,"~");
 	}
 
@@ -82,7 +82,7 @@ boost::tuple<bool,bool,std::string> getGitStatus(){
 	bool hasPendingCommits = true;
 	bool hasUntrackedFiles = false;
 	std::string originPosition;
-	std::string output = exec("git branch -v 2> /dev/null | grep -e '\\*'");
+	std::string output = exec("git status -v 2> /dev/null");
 
 	//if (lines.front() == "fatal: Not a git repository (or any of the parent directories): .git"){
 	//	return boost::make_tuple(hasPendingCommits,hasUntrackedFiles,"fatal");
@@ -105,14 +105,15 @@ boost::tuple<bool,bool,std::string> getGitStatus(){
 		}
 	}
 
-	unsigned clean = output.find("nothing to commit");
-	if (clean < output.size()) hasPendingCommits = false;
+	std::size_t clean = output.find("nothing to commit");
+	if (clean!=std::string::npos) hasPendingCommits = false;
 
-	unsigned semiclean = output.find("nothing added to commit");
-	if (semiclean < output.size()) hasPendingCommits = false;
 
-	unsigned untracked = output.find("ntracked files");
-	if (untracked < output.size() ) hasUntrackedFiles = true; 
+	std::size_t semiclean = output.find("nothing added to commit");
+	if (semiclean!=std::string::npos) hasPendingCommits = false;
+
+	std::size_t untracked = output.find("Untracked files");
+	if (untracked!=std::string::npos) hasUntrackedFiles = true;
 
 	return boost::make_tuple(hasPendingCommits,hasUntrackedFiles,originPosition);
 }
