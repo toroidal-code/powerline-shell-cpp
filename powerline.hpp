@@ -6,8 +6,8 @@
 #include <sstream>
 
 // Seperators
-#define SEPERATOR "⮀"
-#define SEPERATOR_THIN "⮁"
+#define SEPERATOR ""
+#define SEPERATOR_THIN ""
 
 class Powerline;
 
